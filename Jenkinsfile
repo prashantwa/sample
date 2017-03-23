@@ -18,47 +18,9 @@ node {
         checkout scm
     }
 
-    withCredentials([file(credentialsId: JWT_KEY_CRED_ID, variable: 'key_file')]) {
-        stage('Create Scratch Org') {
-			//C:\'\\'Users\'\\'PrashT\'\\'SFDX_Keys\'\\'sfdcserver.key
-            rc = sh returnStatus: true, script: "\'${toolbelt}/\'sfdx _ force:auth:jwt:grant --clientid ${CONNECTED_APP_CONSUMER_KEY} --username ${HUB_ORG} --jwtkeyfile C:\'\\'Users\'\\'PrashT\'\\'.jenkins\'\\'workspace\'\\'sample_master-Y7IQ7V3ZIFXYK3O5MNLPLLNBEMHKT75LN3IAKZIFPARHOJNNBORA@tmp\'\\'secretFiles\'\\'fe93bb5d-213b-4519-8487-ab3654ec67d6\'\\'sfdcserver.key --setdefaultdevhubusername --instanceurl ${SFDC_HOST}"
-            if (rc != 0) { error 'hub org authorization failed' }
-
-            // need to pull out assigned username
-            rmsg = sh returnStdout: true, script: "${toolbelt}/sfdx _ force:org:create --definitionfile config/workspace-scratch-def.json --json --setdefaultusername"
-            printf rmsg
-            def jsonSlurper = new JsonSlurperClassic()
-            def robj = jsonSlurper.parseText(rmsg)
-            if (robj.status != "ok") { error 'org creation failed: ' + robj.message }
-            SFDC_USERNAME=robj.username
-            robj = null
-
-        }
-
-        stage('Push To Test Org') {
-            rc = sh returnStatus: true, script: "${toolbelt}/sfdx _ force:source:push --targetusername ${SFDC_USERNAME}"
-            if (rc != 0) {
-                error 'push failed'
-            }
-            // assign permset
-            rc = sh returnStatus: true, script: "${toolbelt}/sfdx _ force:user:permset:assign --targetusername ${SFDC_USERNAME} --permsetname DreamHouse"
-            if (rc != 0) {
-                error 'permset:assign failed'
-            }
-        }
-
-        stage('Run Apex Test') {
-            sh "mkdir -p ${RUN_ARTIFACT_DIR}"
-            timeout(time: 120, unit: 'SECONDS') {
-                rc = sh returnStatus: true, script: "${toolbelt}/sfdx _ force:apex:test:run --testlevel RunLocalTests --outputdir ${RUN_ARTIFACT_DIR} --resultformat tap --targetusername ${SFDC_USERNAME}"
-                if (rc != 0) {
-                    error 'apex test run failed'
-                }
-            }
-        }
-
-        stage('collect results') {
-            junit keepLongStdio: true, testResults: 'tests/**/*-junit.xml'
-        }
+	stage('Create Scratch Org') {
+        rc = sh returnStatus: true, script: "\'${toolbelt}/\'sfdx _ force:auth:jwt:grant --clientid ${CONNECTED_APP_CONSUMER_KEY} --username ${HUB_ORG} --jwtkeyfile C:\'\\'Users\'\\'PrashT\'\\'SFDX_Keys\'\\'sfdcserver.key --setdefaultdevhubusername --instanceurl ${SFDC_HOST}"
+        if (rc != 0) { error 'hub org authorization failed' }
     }
+
 }
