@@ -19,8 +19,8 @@ node {
     }
 
 	stage('Create Scratch Org') {
-        rc = sh returnStatus: true, script:"\'${toolbelt}/\'sfdx _ force --help"
-        //rc = sh returnStatus: true, script: "\'${toolbelt}/\'sfdx _ force:auth:jwt:grant --clientid ${CONNECTED_APP_CONSUMER_KEY} --username ${HUB_ORG} --jwtkeyfile C:\'\\'Users\'\\'PrashT\'\\'SFDX_Keys\'\\'sfdcserver.key --setdefaultdevhubusername --instanceurl ${SFDC_HOST}"
+        //rc = sh returnStatus: true, script:"\'${toolbelt}/\'sfdx _ force --help"
+        rc = sh returnStatus: true, script: "\'C:\Program Files\Heroku\bin/sfdx.exe\' _ force:auth:jwt:grant --clientid ${CONNECTED_APP_CONSUMER_KEY} --username ${HUB_ORG} --jwtkeyfile C:\'\\'Users\'\\'PrashT\'\\'SFDX_Keys\'\\'sfdcserver.key --setdefaultdevhubusername --instanceurl ${SFDC_HOST}"
         if (rc != 0) { error 'hub org authorization failed' }
     }
 
