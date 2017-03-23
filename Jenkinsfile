@@ -7,8 +7,8 @@ node{
 	def SFDC_USERNAME
 	
 	def HUB_ORG = env.HUB_ORG_DH
-	def SFDC_HOST = env.SFDX_HOST_DH
-	def JWT_KEY = env.JWT_CRED_ID_DH
+	def SFDC_HOST = env.SFDC_HOST_DH
+	//def JWT_KEY = env.JWT_CRED_ID_DH
 	def CONSUMER_KEY = env.CONNECTED_APP_CONSUMER_KEY_DH
 	
 	//def toolblt = tool 'toolbelt'
