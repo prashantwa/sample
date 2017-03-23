@@ -17,7 +17,7 @@ node{
 	}
 	
 	stage('Authorize'){
-		rc = sh returnStatus:true, script:"C:/Program Files/Heroku/bin/sfdx _ force:auth:jwt:grant --clientid ${CONSUMER_KEY} --username ${HUB_ORG} --jwtkeyfile C:\'\\'Users\'\\'PrashT\'\\'SFDX_Keys\'\\'server.key --instanceurl ${HUB_ORG} --setdefaultdevhubusername"
+		rc = sh returnStatus:true, script:"\'C:/Program Files/Heroku/bin/sfdx\' _ force:auth:jwt:grant --clientid ${CONSUMER_KEY} --username ${HUB_ORG} --jwtkeyfile C:\'\\'Users\'\\'PrashT\'\\'SFDX_Keys\'\\'server.key --instanceurl ${HUB_ORG} --setdefaultdevhubusername"
 		if(rc != 0){
 			error 'Dev hub org authorization failed'
 		}
