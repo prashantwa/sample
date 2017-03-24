@@ -23,7 +23,7 @@ node{
 	}
 	
 	stage('Authorize'){
-		rc = sh returnStatus:true, script:"\'${toolblt}'/sfdx _ force:auth:jwt:grant --clientid \'3MVG9YDQS5WtC11pWi_GyYnepWRkE5ksP1pQSaX.HxQtZbrwGGLuGJXiKfgFtlXsKTR4.eAubAB33.47sd9_p\' --username ${HUB_ORG} --jwtkeyfile C:\'\\'Users\'\\'PrashT\'\\'SFDX_Keys\'\\'sfdxkey.key --instanceurl ${SFDC_HOST} --setdefaultdevhubusername"
+		rc = sh returnStatus:true, script:"\'${toolblt}'/sfdx _ force:auth:jwt:grant --clientid \'${CONSUMER_KEY}\' --username ${HUB_ORG} --jwtkeyfile C:\'\\'Users\'\\'PrashT\'\\'SFDX_Keys\'\\'sfdxkey.key --instanceurl ${SFDC_HOST} --setdefaultdevhubusername"
 		if(rc != 0){
 			error 'Dev hub org authorization failed'
 		}
