@@ -20,6 +20,7 @@ node{
         stage('Create Scratch Org') {
             rc = sh returnStatus: true, script: "\'${toolbelt}/\'sfdx _ force:auth:jwt:grant --clientid ${CONSUMER_KEY} --username ${HUB_ORG} --jwtkeyfile C:\'\\'Users\'\\'PrashT\'\\'.jenkins\'\\'workspace\'\\'sample_master-Y7IQ7V3ZIFXYK3O5MNLPLLNBEMHKT75LN3IAKZIFPARHOJNNBORA@tmp\'\\'secretFiles\'\\'fe93bb5d-213b-4519-8487-ab3654ec67d6\'\\'sfdcserver.key --setdefaultdevhubusername --instanceurl ${SFDC_HOST}"
             if (rc != 0) { error 'hub org authorization failed' }
+		}
 	}
 	
 	stage('Authorize'){
